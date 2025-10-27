@@ -57,12 +57,12 @@ server.registerTool(
 );  
   
 // 📌 Инструмент: users-list
-server.registerTool(  
+server.registerTool(
   'users_list',  
   {  
     title: 'Получение списка пользователей',  
     description: 'Возвращает список пользователей со всеми полями',  
-    outputSchema: {  
+    outputSchema: {
       elements: z.array(  
         z.object({
           id: z.string(),
@@ -73,12 +73,10 @@ server.registerTool(
     },  
   },  
   async () => {  
-    let elements = await userService.getUsers();  
+    const elements = await userService.getUsers();  
     return {  
-      structuredContent: {  
-        elements: elements,  
-      },  
-      content: [  
+      structuredContent: { elements },  
+      content: [
         {  
           type: 'text',  
           text: elements.map((u) => `${u.name} (${u.birthYear})`).join(', ') || 'Нет пользователей',  
